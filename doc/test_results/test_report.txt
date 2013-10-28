@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/gtcluster/doc/test_results --- Directory Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+testcase_description_3nodes_1user.txt: Description of our test case for 3 nodes
+	and 1 user.
+
+testcase_description_3nodes_2users.txt: Description of our test case for 3 nodes
+	and 2 users.
+
+console_output_3nodes_1user.txt: Output of the console from the perspective of
+	the server during test case for 3 nodes and 1 user.
+console_output_3nodes_2users.txt: Output of the console from the perspective of
+	the server during test case for 3 nodes and 2 users.
+
+beryllium.tar.gz: Result received by the user Beryllium during the 3 nodes and
+	2 users test case. 
+Note that this is the same result which the user Beryllium received during the 3
+	nodes and 1 user test case.  (we used the same job request for each test
+	case)
+
+sodium.tar.gz: Result received by the user Sodium during the 3 nodes and 2 users
+	test case.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Test Report
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A set of tests intended to maximize code coverage was constructed.
+
+1. Tested the cluster using 1 user submitting 3 tasks to a cluster of 3 nodes.
+	This tests the case where there are sufficient nodes for the pending
+	tasks. This test also included the joining, departure, and rejoining of
+	nodes from the cluster (See console output for details, look before the
+	job connection is made).
+2. Tested the cluster using 2 users submitting 3 tasks (6 total) to a cluster of
+	3 nodes. This tests the case where there are insufficient nodes for the
+	pending tasks.
+
+The cluster passed both tests. We deem that the cluster conforms to the RFC.
+

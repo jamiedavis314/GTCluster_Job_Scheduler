@@ -1,0 +1,162 @@
+Gouda--Turtle Industries	Tim Kopp
+				Jamie Davis
+
+Request for Comments		Clarkson University
+
+GTCluster
+
+GTCluster is a distributed cluster system. It is made up of three parts. The
+first is a user program (U) which interacts with the head node (H) of the cluster. It
+sends the cluster jobs to complete, and receives the output of the run jobs from
+H tagged with a job ID. H, in turn, distributes work among the nodes (N_i) of the
+cluster.
+
+This application uses TCP as an underlying transport later. Every host on the system
+can act as a N_i, however only one H can be active within a given cluster. The H
+keeps track of which nodes are performing what work.
+
+Table of Contents
+1 Introduction
+2 Terminology
+3 Requirements
+4 Specifications
+5 Execution of U
+6 Execution of H
+7 Execution of N_i
+8 Interaction
+
+1 Introduction
+This application is a suite of programs used to manage a cluster of computers
+on a network. It is motivated by the need to concurrently perform independent
+computational tasks among many machines.
+
+2 Terminology
+Some key words in this document are to be interpreted as described below.
+2.1 User, abbreviated U
+This term refers to the application running on the machine that submits jobs to
+the cluster.
+
+2.2 Cluster Head, abbreviated H
+Refers to the application running on a single host on the network, which manages
+the compute nodes and distributes jobs to the nodes.
+
+2.3 Compute Node, abbreviated N_i
+Refers to the application that can run on any host on the network. The application
+receives jobs from H, performs them, and sends the results back to H.
+
+2.4 tarball
+Refers to a directory that has been made into a gzipped tar archive and appended
+with the extension .tar.gz
+
+3 Requirements
+The protocol requirements are as follows:
+1) The cluster shall reliably complete the execution of the submitted jobs.
+2) The cluster shall support the addition and subtraction of N_i's from the
+system at arbitrary times during runtime.
+3) The cluster shall support the execution of jobs from different U sources
+concurrently.
+
+4 Specifications
+
+4.1 Format of Input File
+The user will create a tarball which contains a single text file named "jobs.txt"
+as well as any number of resource tarballs. The text file describes the jobs
+to be performed and is formatted with a single job on each line where each line
+is formatted as follows:
+user@8.8.8.8:/path/to/result/directory.tar.gz
+ID|script.sh|resource
+where:
+where Head has the proper ssh key to copy to the destination.
+ID: a unique natural number that can be contained in a 32-bit signed
+integer.
+script.sh: is the name of the bash script to be run
+resource: the name of the tarball that contains script.sh in its root directory,
+as well as any other files needed to perform the job.
+The names of the script and of the tarball shall not contain the character '|'.
+
+4.2 Format of output file
+The output file shall be a series of tarballs, one for each job. Each tarball
+shall contain the contents of the tarball that contained the resource for the
+run after the job was completed. For example, if an input tarball contained a
+program that removed all of the 's's from an input file, the output would be
+the input file, sans 's's, inside the tarball that contained the program.
+
+4.2 Command--Line Interface
+The user will run the command as follows:
+gtclustersubmit localport 8.8.8.8 /abs/path/to/jobs.tar.gz
+Where the argument to the head flag is the IPv4 address of H, and jobs.tar.gz
+is the tarball containing the input described in 4.1. localport is the local
+port the application will use to listen for the message indicating completion.
+
+4.3 Message Indicating Completion
+H shall, upon the completion of the final job that U requested, send to U the
+4-byte message "DONE" through the port specified by U in the job submission
+request.
+
+4.4 N_i Status Message Format
+N_i will periodically send H 1--byte status messages of the following form:
+0x1: if N_i is up and available
+0x2: if N_i is up and actively running a job
+0x4: if N_i is leaving the cluster
+
+4.5 Job Message format
+
+When H submits a job to an N_i, the message shall be of the form
+"cmd|tarballname|end_location" where:
+cmd is the bash command which should be executed in the
+	directory of the tarball
+tarballname is the name of the tarball.
+end_location is user@host:/place/to/put/end/result/andfilename (ending,
+	presumably, in ".tar.gz"). The node will copy the resulting directory
+	to the location and name specified in end_location,
+	i.e., $scp <file_name> end_location
+
+5 Execution of U
+U shall, upon being invoked, send the path to the input tarball to H, which
+has the specified IP address. It then waits for H to send it a message stating
+that all jobs have completed. Note: H will have copied the results of the runs
+to U as they are completed.
+
+6 Execution of H
+H shall run as a daemon.
+
+7 Execution of N_i
+N_i shall periodically send status messages to H. Upon receiving a job, N_i shall
+execute the job, copy the results to H, and send the status message 0x1 to H.
+N_i's presence in the cluster is a soft state; H detects N_i leaving with a
+timeout.
+
+8 Interaction
+
+8.1 Interaction between U and H
+H will listen on port 31415 for a job request from a U.
+Upon receiving the request, it will open a socket to communicate with U, and copy
+the tarball from the host running U to a buffer directory on the host running H.
+This buffer directory is located in pwd/tmp, where pwd is the present working
+directory the head was launched from.
+It will then decompress and unarchive the tarball, parse the jobs.txt file, and
+start submitting the jobs to available N_i's. Upon completion of the final job,
+H will tar up the results and copy it to U.
+
+U, H will send U the completion message and close that connection with U.
+**Note, N_i's will copy the results of their runs to H.
+
+8.2 Interaction between H and N_i
+H will listen on port 27182 for status messages from N_i.
+N_i will listen on port 16180 for messages from H.
+
+Upon receipt of such a message, H will update its data structures appropriately.
+H shall send jobs to available nodes by copying the tarball to N_i (located at
+/home/node_username/) and then sending a job message in the format specified in
+4.5 to N_i.
+
+If ever H detects that N_i times out H will update its data structures to
+reflect this. If N_i was running a job, H will distribute the job to another
+node and ignore any further input from the N_i.
+
+H shall never submit a job to a node which is already running a job.
+
+8.2.2 Timeout period
+
+A timeout period shall be 30 seconds.
+

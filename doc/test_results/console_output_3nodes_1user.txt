@@ -1,0 +1,30 @@
+node@hydrogen head $ python gthead.py 
+Task node with IP 128.153.145.212 is attempting to make a connection.
+Error listening to IP 128.153.145.212: msg not free msg. Closing this connection...
+Task node with IP 128.153.145.212 is attempting to make a connection.
+Node with ip 128.153.145.212 accepted to list of task nodes.
+Task node with IP 128.153.145.213 is attempting to make a connection.
+Error listening to IP 128.153.145.213: msg not free msg. Closing this connection...
+Task node with IP 128.153.145.214 is attempting to make a connection.
+Node with ip 128.153.145.214 accepted to list of task nodes.
+Task node with IP 128.153.145.213 is attempting to make a connection.
+Node with ip 128.153.145.213 accepted to list of task nodes.
+ERROR. Node with ip 128.153.145.213 has timed out or submitted an invalid message.
+Node being removed from the list of task nodes.
+Task node with IP 128.153.145.213 is attempting to make a connection.
+Node with ip 128.153.145.213 accepted to list of task nodes.
+Job connection made from user IP ('128.153.145.211', 42592)
+test.tar.gz                                                         100% 3684     3.6KB/s   00:00    
+Job received from IP 128.153.145.211
+test1.tar.gz                                                        100%  858     0.8KB/s   00:00    
+test2.tar.gz                                                        100%  847     0.8KB/s   00:00    
+test3.tar.gz                                                        100%  852     0.8KB/s   00:00    
+Job thread ID 0: All tasks assigned. Waiting for completion...
+Job thread ID: 0, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 0, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 0, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 0, # tasks completed = 1. Total # tasks = 3
+Job thread ID: 0, # tasks completed = 3. Total # tasks = 3
+Job thread ID 0: All tasks done. Copying results back to user
+test.tar.gz                                                         100% 6349     6.2KB/s   00:00    
+Job thread ID 0: Done handling this job request.

@@ -1,0 +1,30 @@
+Job connection made from user IP ('128.153.145.204', 56213)
+test.tar.gz                                                         100% 4331     4.2KB/s   00:00    
+Job received from IP 128.153.145.204
+test1.tar.gz                                                        100%  858     0.8KB/s   00:00    
+test2.tar.gz                                                        100%  847     0.8KB/s   00:00    
+test3.tar.gz                                                        100%  852     0.8KB/s   00:00    
+Job thread ID 1: All tasks assigned. Waiting for completion...
+Job thread ID: 1, # tasks completed = 0. Total # tasks = 3
+Job connection made from user IP ('128.153.145.211', 53365)
+test.tar.gz                                                         100% 3684     3.6KB/s   00:00    
+Job received from IP 128.153.145.211
+Job thread ID: 1, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 1, # tasks completed = 0. Total # tasks = 3
+test1.tar.gz                                                        100%  858     0.8KB/s   00:00    
+Job thread ID: 1, # tasks completed = 1. Total # tasks = 3
+test2.tar.gz                                                        100%  847     0.8KB/s   00:00    
+test3.tar.gz                                                        100%  852     0.8KB/s   00:00    
+Job thread ID 2: All tasks assigned. Waiting for completion...
+Job thread ID: 2, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 1, # tasks completed = 3. Total # tasks = 3
+Job thread ID 1: All tasks done. Copying results back to user
+test.tar.gz                                                         100% 6856     6.7KB/s   00:00    
+Job thread ID 1: Done handling this job request.
+Job thread ID: 2, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 2, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 2, # tasks completed = 0. Total # tasks = 3
+Job thread ID: 2, # tasks completed = 3. Total # tasks = 3
+Job thread ID 2: All tasks done. Copying results back to user
+test.tar.gz                                                         100% 6327     6.2KB/s   00:00    
+Job thread ID 2: Done handling this job request.

@@ -1,0 +1,11 @@
+This run tested the case where there were 3 nodes running and 1 user. The 1 user
+submitted a set of jobs with 3 tasks. Thus, this run tests the case in which
+there are sufficient nodes for the available tasks.
+
+console_output_3nodes_1users.txt contains the console output of the head node
+from the test run.
+
+beryllium.tar.gz contains the results of the jobs submitted by that node.
+
+The head node reported successful completion, and the contents of the result
+tarball is as expected, thus the test passed.
